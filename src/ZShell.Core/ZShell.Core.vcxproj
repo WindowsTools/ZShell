@@ -163,12 +163,14 @@
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="lfn.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ZShell.Core.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="lfn.cpp" />
     <ClCompile Include="pch.cpp">

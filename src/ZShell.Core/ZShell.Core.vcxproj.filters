@@ -30,6 +30,9 @@
     <ClInclude Include="lfn.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="core.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZShell.Core.cpp">
@@ -42,6 +45,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="lfn.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="core.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,11 +12,16 @@ typedef struct {
 	INT nSpaceLeft;
 } LFNDTA, * LPLFNDTA, * PLFNDTA;
 
-DWORD GetNameType(LPWSTR lpName);
-BOOL IsLFN(LPWSTR lpName);
+BOOL IsFATName(LPTSTR lpFileName); //check file name
 
-BOOL WFFindFirst(LPLFNDTA lpFind, LPWSTR lpName, DWORD dwAttrFilter);
+DWORD GetNameType(LPTSTR lpName);
+BOOL IsLFN(LPTSTR lpName);
+
+BOOL WFFindFirst(LPLFNDTA lpFind, LPTSTR lpName, DWORD dwAttrFilter);
 BOOL WFFindNext(LPLFNDTA lpFind);
 BOOL WFFFindClose(LPLFNDTA lpFind);
 
-BOOL WFIsDir(LPWSTR lpName);
+BOOL WFIsDir(LPTSTR lpName);
+BOOL LFNMergePath(LPTSTR, LPTSTR);
+BOOL IsLFNSelected();
+
