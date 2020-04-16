@@ -13,3 +13,4 @@
 #endif //PCH_H
 
 #include<Windows.h>
+#include <shellapi.h>

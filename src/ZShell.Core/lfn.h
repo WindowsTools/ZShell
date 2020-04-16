@@ -4,6 +4,11 @@
  * Long File Name ?
 */
 
+//bu ming jue li
+#define FILE_83_CI  0
+#define FILE_83_CS  1
+#define FILE_LONG   2
+
 typedef struct {
 	HANDLE hFindFile;
 	DWORD dwAttrFilter;

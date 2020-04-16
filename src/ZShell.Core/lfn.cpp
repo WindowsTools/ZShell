@@ -70,3 +70,20 @@ BOOL IsFATName(LPTSTR lpFileName)
 
 	return TRUE;
 }
+
+DWORD GetNameType(LPTSTR lpName)
+{
+	if (CHAR_COLON == *(lpName + 1))
+	{
+		if (!IsLFNDrive(lpName))
+		{
+			return FILE_83_CI;
+		}
+		else if (IsFATName(lpName))
+		{
+			return FILE_83_CI;
+		}
+		return FILE_LONG;
+	}
+}
+
