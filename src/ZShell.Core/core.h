@@ -31,3 +31,5 @@
 #define CHAR_QUESTION TEXT('?')
 #define CHAR_STAR TEXT('*')
 #define CHAR_PERCENT TEXT('%')
+
+#define ATTR_USED           0x6DBF	

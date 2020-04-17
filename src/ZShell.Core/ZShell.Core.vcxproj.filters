@@ -16,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="api.md">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -31,6 +34,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="core.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="wfcopy.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,5 +59,10 @@
     <ClCompile Include="core.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

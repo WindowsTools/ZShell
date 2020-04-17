@@ -24,7 +24,7 @@ BOOL IsLFN(LPTSTR lpName);
 
 BOOL WFFindFirst(LPLFNDTA lpFind, LPTSTR lpName, DWORD dwAttrFilter);
 BOOL WFFindNext(LPLFNDTA lpFind);
-BOOL WFFFindClose(LPLFNDTA lpFind);
+BOOL WFFindClose(LPLFNDTA lpFind);
 
 BOOL WFIsDir(LPTSTR lpName);
 BOOL LFNMergePath(LPTSTR, LPTSTR);

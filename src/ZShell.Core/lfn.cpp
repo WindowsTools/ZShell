@@ -78,12 +78,152 @@ DWORD GetNameType(LPTSTR lpName)
 		if (!IsLFNDrive(lpName))
 		{
 			return FILE_83_CI;
-		}
-		else if (IsFATName(lpName))
-		{
-			return FILE_83_CI;
-		}
-		return FILE_LONG;
+		}	
 	}
+	else if (IsFATName(lpName))
+	{
+		return FILE_83_CI;
+	}
+	return FILE_LONG;
+}
+
+BOOL IsLFN(LPTSTR lpName)
+{
+	return IsFATName(lpName) == FALSE;
+}
+
+/*
+ *  Wow64DisableWow64FsRedirection(32-bit application?)
+ */
+BOOL WFFindFirst(LPLFNDTA lpFind, LPTSTR lpName, DWORD dwAttrFilter)
+{
+	INT nLen;
+	LPTSTR pEnd;
+
+	PVOID oldValue;
+	Wow64DisableWow64FsRedirection(&oldValue);
+
+	if (dwAttrFilter & ~(FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM) == 0)
+	{
+		lpFind->hFindFile = FindFirstFileEx(lpName, FindExInfoStandard, &lpFind->fd, FindExSearchLimitToDirectories, NULL, 0);
+	}
+	else
+	{
+		lpFind->hFindFile = FindFirstFile(lpName, &lpFind->fd);
+	}
+
+	if (lpFind->hFindFile == INVALID_HANDLE_VALUE)
+	{
+		lpFind->err = GetLastError();
+	}
+	else
+	{
+		lpFind->err = 0;
+	}
+		
+	dwAttrFilter |= FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_NORMAL |
+		FILE_ATTRIBUTE_REPARSE_POINT | FILE_ATTRIBUTE_TEMPORARY |
+		FILE_ATTRIBUTE_COMPRESSED | FILE_ATTRIBUTE_ENCRYPTED | FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+
+	Wow64RevertWow64FsRedirection(oldValue);
+
+	nLen = lstrlen(lpName);
+	pEnd = &lpName[nLen - 1];
+
+	while (CHAR_BACKSLASH != *pEnd)
+	{
+		pEnd--;
+		nLen--;
+	}
+
+	lpFind->nSpaceLeft = MAX_PATH - nLen - 1;
+
+	if (lpFind->hFindFile != INVALID_HANDLE_VALUE)
+	{
+		lpFind->dwAttrFilter = dwAttrFilter;
+
+		if ((~dwAttrFilter & lpFind->fd.dwFileAttributes == 0L) || WFFindNext(lpFind))
+			return TRUE;
+		else
+		{
+			WFFindClose(lpFind);
+			return FALSE;
+		}
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL WFFindNext(LPLFNDTA lpFind)
+{
+	PVOID oldValue;
+	Wow64DisableWow64FsRedirection(&oldValue);
+
+	while (FindNextFile(lpFind->hFindFile, &lpFind->fd)) 
+	{
+
+		lpFind->fd.dwFileAttributes &= ATTR_USED;
+
+
+		if ((lpFind->fd.dwFileAttributes & ~lpFind->dwAttrFilter) != 0)
+			continue;
+
+		if (lstrlen(lpFind->fd.cFileName) > lpFind->nSpaceLeft) 
+		{
+			if (!lpFind->fd.cAlternateFileName[0] ||
+				lstrlen(lpFind->fd.cAlternateFileName) > lpFind->nSpaceLeft) 
+			{
+				continue;
+			}
+			lstrcpy(lpFind->fd.cFileName, lpFind->fd.cAlternateFileName);
+		}
+
+		Wow64RevertWow64FsRedirection(oldValue);
+		lpFind->err = 0;
+		return TRUE;
+	}
+
+	lpFind->err = GetLastError();
+	Wow64RevertWow64FsRedirection(oldValue);
+	return(FALSE);
+}
+
+BOOL WFFindClose(LPLFNDTA lpFind)
+{
+	BOOL bRet;
+
+	if (lpFind->hFindFile == INVALID_HANDLE_VALUE)
+	{
+		return FALSE;
+	}
+
+	bRet = FindClose(lpFind->hFindFile);
+	return bRet;
+}
+
+BOOL WFIsDir(LPTSTR lpDir)
+{
+	DWORD attr = GetFileAttributes(lpDir);
+
+	if (attr == INVALID_FILE_ATTRIBUTES)
+		return FALSE;
+
+	if (attr & FILE_ATTRIBUTE_DIRECTORY)
+		return TRUE;
+
+	return FALSE;
+}
+
+BOOL LFNMergePath(LPTSTR lpMask, LPTSTR lpFile)
+{
+	TCHAR szT[MAX_PATH * 2];
+	INT iResStrLen;
+
+	lstrcpy(szT, lpMask);
+
+	//todo
+	return FALSE;
 }
 
