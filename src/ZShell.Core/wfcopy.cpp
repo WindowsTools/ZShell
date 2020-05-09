@@ -14,6 +14,12 @@ UINT RemoveLast(LPTSTR pFile)
 			pT = pFile;
 			uChars = 0;
 		}
-		else if(*pFile == CH)
+		else if (*pFile == CHAR_COLON)
+		{
+			if (pFile[1] == CHAR_BACKSLASH)
+			{
+				pFile++;
+			}
+		}
 	}
 }
