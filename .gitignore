@@ -3,3 +3,14 @@
 ################################################################################
 
 /.vs/ZShell/v16/.suo
+/src/ZShell.Core/Debug/ZSHELLCORE.pch
+/src/ZShell.Core/Debug/ZShell.Core.obj
+/src/ZShell.Core/Debug/ZShell.Core.log
+/src/ZShell.Core/Debug/wfutil.obj
+/src/ZShell.Core/Debug/wfcopy.obj
+/src/ZShell.Core/Debug/ZShell.Core.tlog
+/src/ZShell.Core/Debug
+/src/ZShell/obj/Debug
+/src/Debug
+/src/.vs/ZShell/v15/Server/sqlite3
+/src/.vs/ZShell/v15

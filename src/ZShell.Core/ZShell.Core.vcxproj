@@ -93,7 +93,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;ZSHELLCORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ZSHELLCORE_EXPORTS;_WINDOWS;_USRDLL;USELASTDOT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -170,6 +170,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="wfcopy.h" />
+    <ClInclude Include="wfutil.h" />
     <ClInclude Include="ZShell.Core.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="wfcopy.cpp" />
+    <ClCompile Include="wfutil.cpp" />
     <ClCompile Include="ZShell.Core.cpp" />
   </ItemGroup>
   <ItemGroup>

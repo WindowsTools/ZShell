@@ -1,5 +1,15 @@
 #pragma once
 
+#include "resource.h"
+
+#ifdef _GLOBALS
+#define Extern
+#define EQ(x) = x
+#else
+#define Extern extern
+#define EQ(x)
+#endif
+
 #define CHAR_DASH TEXT('-')
 #define CHAR_CARET TEXT('^')
 #define CHAR_UNDERSCORE TEXT('_')
@@ -33,3 +43,9 @@
 #define CHAR_PERCENT TEXT('%')
 
 #define ATTR_USED           0x6DBF	
+
+#define COUNTOF(x) (sizeof(x)/sizeof(*x))
+
+Extern HINSTANCE  hAppInstance;  //TODO: invalid
+
+Extern TCHAR        szNULL[]                EQ(TEXT(""));

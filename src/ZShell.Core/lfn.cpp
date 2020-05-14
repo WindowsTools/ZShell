@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "lfn.h"
 #include "core.h"
+#include "wfcopy.h"
+#include "wfutil.h"
 
 BOOL IsFATName(LPTSTR lpFileName)
 {
@@ -216,6 +218,113 @@ BOOL WFIsDir(LPTSTR lpDir)
 	return FALSE;
 }
 
+WORD I_LFNEditName(LPTSTR lpSrc, LPTSTR lpEd, LPTSTR lpRes, INT iResBufSize)
+{
+	INT ResLen = 0;
+
+#ifdef  USELASTDOT
+	LPTSTR lpChar;
+
+	lpChar = GetExtension(lpSrc);
+	if (*lpChar)
+	{
+		lpChar--;
+	}
+	else
+	{
+		lpChar = NULL;
+	}
+#endif //  USELASTDOT
+
+	while (*lpEd)
+	{
+		if (ResLen < iResBufSize)
+		{
+			switch (*lpEd)
+			{
+			case CHAR_STAR:
+			{
+				TCHAR delimit = *(lpEd + 1);
+
+#ifdef USELASTDOT
+				if (CHAR_DOT != delimit)
+					lpChar = NULL;
+
+				while ((ResLen < iResBufSize) && (*lpSrc != CHAR_NULL) && (*lpSrc != delimit || (lpChar && lpChar != lpSrc)))
+				{
+#else
+				while ((ResLen < iResBufSize) &&
+					(*lpSrc != CHAR_NULL) && (*lpSrc != delimit)) {
+#endif // USELASTDOT
+
+					*(lpRes++) = *(lpSrc++);
+					ResLen++;
+				}
+
+			}
+				break;
+			case CHAR_QUESTION:
+				if ((*lpSrc != CHAR_DOT) && (*lpSrc != CHAR_NULL))
+				{
+					if (ResLen < iResBufSize)
+					{
+						*(lpRes++) = *(lpSrc++);
+						ResLen++;
+					}
+					else
+						return ERROR_INVALID_PARAMETER;
+				}
+				break;
+			case CHAR_DOT:
+				while ((*lpSrc != CHAR_DOT) && (*lpSrc != CHAR_NULL))
+				{
+					lpSrc++;
+				}
+
+				*(lpRes++) = CHAR_DOT;
+
+				ResLen++;
+
+				if (*lpSrc)
+					lpSrc++;
+				break;
+			default:
+				if ((*lpSrc != CHAR_DOT) && (*lpSrc != CHAR_NULL))
+				{
+					lpSrc++;
+				}
+
+				if (ResLen < iResBufSize)
+				{
+					*(lpRes++) = *lpEd;
+					ResLen++;
+				}
+				else
+				{
+					return ERROR_INVALID_PARAMETER;
+				}
+				break;
+			}
+
+			lpEd++;
+		}
+		else
+		{
+			return ERROR_INVALID_PARAMETER;
+		}
+	}
+
+	if (ResLen < iResBufSize)
+	{
+		*lpRes = CHAR_NULL;
+		return NO_ERROR;
+	}
+	else
+	{
+		return ERROR_INVALID_PARAMETER;
+	}
+}
+
 BOOL LFNMergePath(LPTSTR lpMask, LPTSTR lpFile)
 {
 	TCHAR szT[MAX_PATH * 2];
@@ -223,7 +332,30 @@ BOOL LFNMergePath(LPTSTR lpMask, LPTSTR lpFile)
 
 	lstrcpy(szT, lpMask);
 
-	//todo
-	return FALSE;
+	RemoveLast(szT);
+
+	AddBackSlach(szT);
+
+	if (!(CHAR_BACKSLASH == lpFile[0] && CHAR_NULL == lpFile[1]))
+	{
+		iResStrLen = lstrlen(szT);
+
+		I_LFNEditName(lpFile, FindFileName(lpMask), szT + iResStrLen, COUNTOF(szT) - iResStrLen);
+
+		iResStrLen = lstrlen(szT);
+		if ((iResStrLen != 0) && CHAR_DOT == szT[iResStrLen - 1])
+			szT[iResStrLen - 1] = CHAR_NULL;
+	}
+
+	lstrcpy(lpMask, szT);
+	return TRUE;
+}
+
+DWORD WFCopy(LPTSTR pssFrom, LPTSTR pssTo)
+{
+	DWORD dwRet;
+	TCHAR szTemp[MAX_PATH];
+
+	Notify
 }
 

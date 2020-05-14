@@ -30,3 +30,5 @@ BOOL WFIsDir(LPTSTR lpName);
 BOOL LFNMergePath(LPTSTR, LPTSTR);
 BOOL IsLFNSelected();
 
+WORD I_LFNEditName(LPTSTR lpSrc, LPTSTR lpEd, LPTSTR lpRes, INT iResBufSize);
+
