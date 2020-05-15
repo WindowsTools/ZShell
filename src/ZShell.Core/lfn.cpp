@@ -356,6 +356,8 @@ DWORD WFCopy(LPTSTR pssFrom, LPTSTR pssTo)
 	DWORD dwRet;
 	TCHAR szTemp[MAX_PATH];
 
-	Notify
+	//Notify(hdlgProgress,IDS_)
+
+	//todo
 }
 

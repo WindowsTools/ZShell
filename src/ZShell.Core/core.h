@@ -48,4 +48,6 @@
 
 Extern HINSTANCE  hAppInstance;  //TODO: invalid
 
+Extern HWND    hdlgProgress;     //TODO: invalid
+
 Extern TCHAR        szNULL[]                EQ(TEXT(""));
