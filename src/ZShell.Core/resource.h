@@ -28,6 +28,8 @@
 #define IDD_IGNOREALL 112
 #define IDD_VERTEXT   113
 
+#define IDS_COPYINGMSG 152
+
 #define IDD_NAME      201
 #define IDD_TYPE      202
 #define IDD_SIZE      203

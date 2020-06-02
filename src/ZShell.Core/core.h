@@ -49,5 +49,16 @@
 Extern HINSTANCE  hAppInstance;  //TODO: invalid
 
 Extern HWND    hdlgProgress;     //TODO: invalid
+Extern HWND    hwndFrame       EQ(NULL);  //TODO: invalid
 
 Extern TCHAR        szNULL[]                EQ(TEXT(""));
+
+Extern INT   cDisableFSC    EQ(0);   
+
+Extern BOOL bFSCTimerSet       EQ(FALSE);
+
+#define FS_ENABLEFSC               (WM_USER+0x121)
+#define FS_DISABLEFSC              (WM_USER+0x122)
+
+VOID ChangeFileSystem(DWORD dwOper, LPWSTR lpPath, LPWSTR lpTo);
+BOOL  QualifyPath(LPTSTR);

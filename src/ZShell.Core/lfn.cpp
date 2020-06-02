@@ -351,13 +351,18 @@ BOOL LFNMergePath(LPTSTR lpMask, LPTSTR lpFile)
 	return TRUE;
 }
 
-DWORD WFCopy(LPTSTR pssFrom, LPTSTR pssTo)
+DWORD WFCopy(LPTSTR pszFrom, LPTSTR pszTo)
 {
 	DWORD dwRet;
 	TCHAR szTemp[MAX_PATH];
 
-	//Notify(hdlgProgress,IDS_)
+	Notify(hdlgProgress, IDS_COPYINGMSG, pszFrom, pszTo);  //TODO: invalid
 
-	//todo
+	if (CopyFile(pszFrom, pszTo, FALSE))
+	{
+		ChangeFileSystem
+	}
+
+
 }
 

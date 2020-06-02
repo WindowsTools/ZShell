@@ -68,6 +68,9 @@
     <ClCompile Include="wfutil.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="wfcommon.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

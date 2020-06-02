@@ -183,6 +183,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="wfcommon.cpp" />
     <ClCompile Include="wfcopy.cpp" />
     <ClCompile Include="wfutil.cpp" />
     <ClCompile Include="ZShell.Core.cpp" />

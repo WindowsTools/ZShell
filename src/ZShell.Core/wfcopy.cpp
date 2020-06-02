@@ -89,3 +89,8 @@ VOID SetDlgItemPath(HWND hDlg, INT id, LPTSTR pszPath)
 
 	//todo to be continue
 }
+
+BOOL QualifyPath(LPTSTR)
+{
+
+}
