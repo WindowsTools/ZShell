@@ -38,3 +38,13 @@ LPTSTR GetExtension(LPTSTR pszFile)
 	return pSave + 1;
 }
 
+VOID  CheckSlashes(LPTSTR lpT)
+{
+	while (*lpT)
+	{
+		if (*lpT == CHAR_SLASH)
+			*lpT = CHAR_BACKSLASH;
+		lpT++;
+	}
+}
+

@@ -42,9 +42,12 @@
 #define CHAR_STAR TEXT('*')
 #define CHAR_PERCENT TEXT('%')
 
+#define SZ_ACOLONSLASH    TEXT("A:\\")
+
 #define ATTR_USED           0x6DBF	
 
 #define COUNTOF(x) (sizeof(x)/sizeof(*x))
+#define ISUNCPATH(x) (CHAR_BACKSLASH == x[0] && CHAR_BACKSLASH == x[1])
 
 Extern HINSTANCE  hAppInstance;  //TODO: invalid
 
@@ -60,5 +63,15 @@ Extern BOOL bFSCTimerSet       EQ(FALSE);
 #define FS_ENABLEFSC               (WM_USER+0x121)
 #define FS_DISABLEFSC              (WM_USER+0x122)
 
+typedef HWND* PHWND;
+typedef INT DRIVE;
+typedef INT DRIVEIND;
+
 VOID ChangeFileSystem(DWORD dwOper, LPWSTR lpPath, LPWSTR lpTo);
 BOOL  QualifyPath(LPTSTR);
+
+//wfutil.cpp
+VOID  CheckSlashes(LPTSTR);
+
+//wfcopy.cpp
+LPTSTR StripColon(LPTSTR pPath);

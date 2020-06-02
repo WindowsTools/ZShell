@@ -90,7 +90,61 @@ VOID SetDlgItemPath(HWND hDlg, INT id, LPTSTR pszPath)
 	//todo to be continue
 }
 
-BOOL QualifyPath(LPTSTR)
+LPTSTR StripColon(register LPTSTR pPath)
 {
+	register INT cb = lstrlen(pPath);
 
+	if (cb > 2 && pPath[cb - 1] == CHAR_COLON)
+		pPath[cb - 1] = CHAR_NULL;
+
+	return pPath;
+}
+
+BOOL QualifyPath(LPTSTR lpszPath)
+{
+	INT cb, nSpaceLeft, i, j;
+	TCHAR szTemp[MAX_PATH];
+	DRIVE drive = 0;
+	LPTSTR pOrig, pT;
+	BOOL flfn = FALSE;
+	BOOL fQuote = FALSE;
+
+	TCHAR szDrive[] = SZ_ACOLONSLASH;
+
+	LPTSTR lpszDot;
+	UINT uLen;
+
+	lstrcpyn(szTemp, lpszPath, COUNTOF(szTemp));
+	CheckSlashes(szTemp);
+	StripColon(szTemp);
+
+	nSpaceLeft = MAX_PATH - 1;
+
+	for (pT = pOrig = szTemp;*pOrig;pOrig++)
+	{
+		if (*pOrig != CHAR_DQUOTE)
+		{
+			*pT++ = *pOrig;
+		}
+		else 
+		{
+			fQuote = TRUE;
+		}
+	}
+
+	pOrig == szTemp;
+
+	if (ISUNCPATH(pOrig))
+	{
+		for (i = 0, j = 2, pOrig += 2;*pOrig && i < 2;pOrig++, j++)
+		{
+			if (CHAR_BACKSLASH == *pOrig)
+				i++;
+		}
+
+		if (!i)
+			return FALSE;
+
+		flfn = IsLFNDrive(lpszPath);
+	}
 }
